@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/triplog</property>
+    <property name="hibernate.connection.username">lopez</property>
+    <property name="hibernate.connection.password">1311</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.pool_size">5</property>
+
+
+    <property name="hibernate.current_session_context_class">thread</property>
+
+
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+
+
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <!-- Entidades -->
+    <mapping class="com.triplog.model.Usuario"/>
+    <mapping class="com.triplog.model.Viaje"/>
+    <mapping class="com.triplog.model.Gasto"/>
+    <mapping class="com.triplog.model.Gasta"/>
+    <mapping class="com.triplog.model.GastaId"/>
+    <mapping class="com.triplog.model.Lugar"/>
+    <mapping class="com.triplog.model.Participa"/>
+    <mapping class="com.triplog.model.ParticipaId"/>
+    <mapping class="com.triplog.model.Tarea"/>
+    <mapping class="com.triplog.model.Ubicacion"/>
+    <mapping class="com.triplog.model.UbicacionId"/>
+    <!-- Agregar entidades -->
+  </session-factory>
+</hibernate-configuration>
