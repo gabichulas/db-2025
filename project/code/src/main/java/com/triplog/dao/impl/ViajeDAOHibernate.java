@@ -84,10 +84,14 @@ public abstract class ViajeDAOHibernate extends GenericDAOHibernate<Viaje, Long>
             Transaction transaction = session.beginTransaction();
             try {
                 Query<Viaje> query = session.createQuery(
-                        "SELECT v FROM Viaje v JOIN Participa p WHERE p.id = :idUsuario", Viaje.class
+                        "SELECT DISTINCT v FROM Viaje v " +
+                                "JOIN FETCH v.participas p " +       // Carga los participa
+                                "JOIN FETCH p.idUsuario u " +          // Carga los usuarios de cada participa
+                                "WHERE u.id = :idUsuario", Viaje.class
                 );
                 query.setParameter("idUsuario", idUsuario);
                 List<Viaje> result = query.getResultList();
+                System.out.println("Usuario " + idUsuario + " encontrado");
                 transaction.commit();
                 return result;
             } catch (Exception e) {

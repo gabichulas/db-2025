@@ -58,4 +58,45 @@ public abstract class UsuarioDAOHibernate extends GenericDAOHibernate<Usuario, L
             }
         }
     }
+
+    public Boolean verifyUsuario(String email, String password) throws DAOException {
+        if (email == null || email.isBlank() || password == null || password.isEmpty()) {
+            return false;
+        }
+        if (!email.matches("[^@]+@[^@]+\\.[^@]+") || email.length() > 254) {
+            return false;
+        }
+        Usuario usuario = findByEmail(email).orElse(null);
+        if (usuario != null) {
+            System.out.println("Usuario encontrado");
+            System.out.println(usuario.verifyContrasena(password));
+            System.out.println(password);
+            System.out.println(usuario.getContrasena());
+            return usuario.verifyContrasena(password);
+        }
+        return false;
+
+    }
+
+    public List<Usuario> getParticipantesDelViaje(Long viajeId) throws DAOException {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<Usuario> query = session.createQuery(
+                        "SELECT u FROM Usuario u " +
+                                "JOIN Participa p ON u.id = p.idUsuario.id " +
+                                "WHERE p.idViaje.id = :viajeId", Usuario.class
+                );
+                query.setParameter("viajeId", viajeId);
+                List<Usuario> result = query.getResultList();
+                transaction.commit();
+                return result;
+            } catch (Exception e) {
+                if (transaction != null && transaction.isActive()) {
+                    transaction.rollback();
+                }
+                throw new DAOException("Error al buscar usuario por nombre", e);
+            }
+        }
+    }
 }

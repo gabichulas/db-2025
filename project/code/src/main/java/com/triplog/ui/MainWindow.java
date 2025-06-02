@@ -1,6 +1,7 @@
 package com.triplog.ui;
 
 import com.triplog.dao.DAOException;
+import com.triplog.model.Usuario;
 import com.triplog.model.Viaje;
 
 import javax.swing.*;
@@ -9,7 +10,7 @@ class MainWindow extends JFrame {
     private final JTabbedPane tabbedPane;
 
     public MainWindow() throws DAOException {
-        setTitle("Travel Planner");
+        setTitle("Triplog");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 650);
         setLocationRelativeTo(null);
@@ -39,7 +40,7 @@ class MainWindow extends JFrame {
             tabbedPane.setComponentAt(2, new ExpensesPanel(viaje));
             tabbedPane.setEnabledAt(1, true);
             tabbedPane.setEnabledAt(2, true);
-            setTitle("Travel Planner - " + viaje.getTitulo());
+            setTitle("Triplog - " + viaje.getTitulo());
         }
     }
 }

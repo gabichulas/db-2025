@@ -13,24 +13,31 @@ public class ParticipaId implements Serializable {
     @Serial
     private static final long serialVersionUID = -2587110505206155265L;
     @Column(name = "id_viaje", nullable = false)
-    private Integer idViaje;
+    private Long idViaje;
 
     @Column(name = "id_usuario", nullable = false)
-    private Integer idUsuario;
+    private Long idUsuario;
 
-    public Integer getIdViaje() {
+    public ParticipaId(Long id, Long id1) {
+    }
+
+    public ParticipaId() {
+
+    }
+
+    public Long getIdViaje() {
         return idViaje;
     }
 
-    public void setIdViaje(Integer idViaje) {
+    public void setIdViaje(Long idViaje) {
         this.idViaje = idViaje;
     }
 
-    public Integer getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

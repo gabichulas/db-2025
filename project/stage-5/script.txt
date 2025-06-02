@@ -63,21 +63,21 @@ CREATE TABLE triplog.GASTA (
 
 -- 1. Insertar 15 usuarios con contraseñas hasheadas (bcrypt)
 INSERT INTO triplog.USUARIO (nombre, email, contrasena) VALUES
-('Juan Pérez', 'juan.perez@triplog.com', '$2a$10$N9qo8uLOickgx2ZMRZoMy.Mrq1V1zHsg.6P7rM9XqO2dQbQ1R1pW'), -- juan123
-('María García', 'maria.garcia@triplog.com', '$2a$10$WXyVJ3Lf6zV7g9V8nR5ZNuQ9bTd0jJk1XhY9uKv0Lm2Xz1Y1F2D'), -- mariaSecure!
-('Carlos López', 'carlos.lopez@triplog.com', '$2a$10$Sf9Q2r6K9jX1V3bN5Y6ZPuQ9cTd0kJl1XhY9uIv0Lm2Wz1Y1G2H'), -- lopezPass1
-('Ana Martínez', 'ana.martinez@triplog.com', '$2a$10$Tg0R7s5L8kX2V4bN6Y7ZQuQ9dTe0kKl1XhY9uJw0Ln2Xz1Y1H2I'), -- anaMartinez2
-('Pedro Sánchez', 'pedro.sanchez@triplog.com', '$2a$10$Uh1V8t6Y9jX3W4bN7Z8aPuQ0eTf1kLm2XhY9uKw0Ln3Xz1Y2I3J'), -- pedroSanchez3
-('Lucía Fernández', 'lucia.fernandez@triplog.com', '$2a$10$Xp2Y4v6w8z1A3C5E7G9J.LmNq1S3D5F7H8K9J0L1M2N3O4P5Q6R'), -- luciaFer2023
-('Diego Rodríguez', 'diego.rodriguez@triplog.com', '$2a$10$Yq2T4v6x8z9A1B3C5D7E.FgH1J2K3L4M5N6O7P8Q9R0S1T2U3V'), -- diegoR456
-('Sofía González', 'sofia.gonzalez@triplog.com', '$2a$10$Zr4X6v8y1B3D5F7H9J0K.LmNq1P3R5T7V9X0Y1Z2A3B4C5D6E7'), -- sofiGonza!
-('Martín Díaz', 'martin.diaz@triplog.com', '$2a$10$As2D4f6h8j0K1L3M5N7P.Qr9S1T3V5X7Y9Z0A1B2C3D4E5F6G7'), -- martinD789
-('Valentina Morales', 'valentina.morales@triplog.com', '$2a$10$Bt3E5g7i9k1L2M4N6O8P.Qr0S2T4V6X8Y9Z0A1B2C3D4E5F6G7'), -- valeMorales1
-('Facundo Luna', 'facundo.luna@triplog.com', '$2a$10$Cu4F6h8j1K2L3M5N7O9P.Qr0S2T4V6X8Y9Z0A1B2C3D4E5F6G7'), -- facuLuna2023
-('Camila Herrera', 'camila.herrera@triplog.com', '$2a$10$Dv5G7i9k1L2M4N6O8P0Q.Rs1T3U5W7Y9Z0A1B2C3D4E5F6G7H8'), -- camiHerrera!
-('Gonzalo Castro', 'gonzalo.castro@triplog.com', '$2a$10$Ew6H8j1K2L3M4N5O7P9Q.Rs0T2U4V6X8Y9Z0A1B2C3D4E5F6G7'), -- gonzaCastro2
-('Florencia Ríos', 'florencia.rios@triplog.com', '$2a$10$Fx7I9k1L2M3N4O5P6Q7R.Ss0T1U3V5X7Y8Z9A0B1C2D3E4F5G6'), -- florRios2023
-('Lautaro Méndez', 'lautaro.mendez@triplog.com', '$2a$10$Gy8H9j0K1L2M3N4O5P6Q.Rs0T1U3V5X7Y8Z9A0B1C2D3E4F5G6'); -- lautaMendez!
+('Juan Pérez', 'juan.perez@triplog.com', '$2a$10$a./gqAxBDlDvikPHH8cK/OkP/AhliuLoC/xH6oNy2exwhtnPF1npG'), -- juan123
+('María García', 'maria.garcia@triplog.com', '$2a$10$lBKI9gzKMUMXY0PPX7sN3.Becx2mMwjDuoKM5iM6zDdXntuxUmOFi'), -- mariaSecure!
+('Carlos López', 'carlos.lopez@triplog.com', '$2a$10$yTMkBb3T/AlXH4JO8vIl/.OSnl8MC/IiBKteP1uE12gDQnnD91Sra'), -- lopezPass1
+('Ana Martínez', 'ana.martinez@triplog.com', '$2a$10$U.1K.VLiXyakdFFInMZyf.kM.swye7MS2lK5FUfCNGHGA3Q1Hvr8y'), -- anaMartinez2
+('Pedro Sánchez', 'pedro.sanchez@triplog.com', '$2a$10$4A14LZNjdQ2i/ANhsx7dHOs6mlE0W5F4eI64Tecnx1oDttOE.nkIe'), -- pedroSanchez3
+('Lucía Fernández', 'lucia.fernandez@triplog.com', '$2a$10$0wDM.oiD82OJy8e6V9OaCe8JYYDtrTS4ghxid6no6XxJAykJ/6e76'), -- luciaFer2023
+('Diego Rodríguez', 'diego.rodriguez@triplog.com', '$2a$10$LdWkRae8/bemELezD1c3q.oAuih/9AxfDTgqOBZ9E.Cl3ygPsZVVS'), -- diegoR456
+('Sofía González', 'sofia.gonzalez@triplog.com', '$2a$10$wHsR..RzG8VR6r298GF/8.e1ZhRQEbBrF0RQQ/kq0PLItgNSwYuPy'), -- sofiGonza!
+('Martín Díaz', 'martin.diaz@triplog.com', '$2a$10$JWLwKtpT8jHVo/1sLepS4eWze51pW1SmRDYrn0eM66kzdJ5ZVkYKK'), -- martinD789
+('Valentina Morales', 'valentina.morales@triplog.com', '$2a$10$flr6g6qhP2NDamfBqsjNEuBUE3.ehVb2g7Wf8OTeVpMMpTuqxg9Ii'), -- valeMorales1
+('Facundo Luna', 'facundo.luna@triplog.com', '$2a$10$L4vUDclirXcGox8EH7krP.gEtQowZ9RXNN6W8x97zywHHDpdqQbPG'), -- facuLuna2023
+('Camila Herrera', 'camila.herrera@triplog.com', '$2a$10$URaO..mltAkGXRQ65LUkvOLRjFpQAwUTnefM5Rlws68K.MKynSxbO'), -- camiHerrera!
+('Gonzalo Castro', 'gonzalo.castro@triplog.com', '$2a$10$.alXtENIMJGAlIYSAE8NHe0h8Wzqrxeu1..ljO4UaSv5o0MKVJNo.'), -- gonzaCastro2
+('Florencia Ríos', 'florencia.rios@triplog.com', '$2a$10$3fpIpPD0V0F58XW3PybVY.W0ZuB.uutlsgRxIK8h0VvRdjMzkhyK.'), -- florRios2023
+('Lautaro Méndez', 'lautaro.mendez@triplog.com', '$2a$10$bGbM.a2jiabbv3OfkRyII.RpzaW1W953/Jn6ZSttgnDRPYj7VR2JC'); -- lautaMendez!
 
 -- 2. Insertar 10 viajes con diversos destinos y fechas
 INSERT INTO triplog.VIAJE (titulo, destino, fecha_inicio, fecha_fin, id_creador) VALUES
@@ -219,35 +219,35 @@ INSERT INTO triplog.LUGAR (nombre, direccion, fecha_visita) VALUES
 
 -- 5. Relacionar lugares con viajes (UBICACION)
 INSERT INTO triplog.UBICACION (id_viaje, id_lugar) VALUES
--- Bariloche (Viaje 1)
+
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
--- Córdoba (Viaje 2)
+
 (2, 6), (2, 7), (2, 8), (2, 9),
--- Mendoza (Viaje 3)
+
 (3, 10), (3, 11), (3, 12), (3, 13),
--- Mar del Plata (Viaje 4)
+
 (4, 14), (4, 15), (4, 16), (4, 17),
--- Buenos Aires (Viaje 5)
+
 (5, 18), (5, 19), (5, 20), (5, 21),
--- Iguazú (Viaje 6)
+
 (6, 22), (6, 23), (6, 24), (6, 25),
--- Salta (Viaje 7)
+
 (7, 26), (7, 27), (7, 28), (7, 29),
--- Ushuaia (Viaje 8)
+
 (8, 30), (8, 31), (8, 32), (8, 33),
--- Cafayate (Viaje 9)
+
 (9, 34), (9, 35), (9, 36),
--- Gualeguaychú (Viaje 10)
+
 (10, 37), (10, 38), (10, 39),
--- Rosario (Viaje 11)
+
 (11, 40), (11, 41), (11, 42),
--- Termas de Río Hondo (Viaje 12)
+
 (12, 43), (12, 44), (12, 45),
--- El Chaltén (Viaje 13)
+
 (13, 46), (13, 47), (13, 48),
--- San Antonio de Areco (Viaje 14)
+
 (14, 49), (14, 50), (14, 51),
--- Pinamar (Viaje 15)
+
 (15, 52), (15, 53), (15, 54), (15, 55);
 
 -- 6. Insertar tareas (3-5 tareas por viaje)

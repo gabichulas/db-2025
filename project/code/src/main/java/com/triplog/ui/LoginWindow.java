@@ -1,15 +1,28 @@
 package com.triplog.ui;
 
 import com.triplog.dao.DAOException;
+import com.triplog.dao.UsuarioDAO;
+import com.triplog.dao.impl.UsuarioDAOHibernate;
+import com.triplog.model.Usuario;
+import com.triplog.util.SessionManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 public class LoginWindow extends JFrame {
+    UsuarioDAOHibernate dao = new UsuarioDAOHibernate() {
+        @Override
+        public List<Usuario> findByGasto(Long idGasto) throws DAOException {
+            return List.of();
+        }
+    };
     public LoginWindow() {
-        setTitle("Travel Planner - Login");
+        setTitle("Triplog - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(350, 250);
         setLocationRelativeTo(null);
@@ -44,11 +57,59 @@ public class LoginWindow extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra la ventana de login
+                System.out.println("Inicio de acción de login");
+                String username = userField.getText().trim();
+                char[] passwordChars = passField.getPassword();
+
                 try {
-                    new MainWindow().setVisible(true); // Abre la ventana principal
-                } catch (DAOException ex) {
-                    throw new RuntimeException(ex);
+                    System.out.println("Usuario ingresado: " + username);
+
+                    // Paso 1: Buscar usuario
+                    System.out.println("Buscando usuario en BD...");
+                    Optional<Usuario> usuarioOpt = dao.findByEmail(username);
+
+                    if (usuarioOpt.isEmpty()) {
+                        System.out.println("Usuario no encontrado");
+                        JOptionPane.showMessageDialog(null,
+                                """
+                                        Credenciales inválidas. Asegúrese que:
+                                        - El email sea correcto y tenga formato válido (usuario@dominio.com)
+                                        """,
+                                "Error de validación",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    // Paso 2: Verificar contraseña
+                    String password = new String(passwordChars);
+                    System.out.println("Verificando contraseña...");
+
+                    if (dao.verifyUsuario(username, password)) {
+                        System.out.println("Contraseña válida");
+                        // Paso 3: Establecer sesión
+                        SessionManager.getInstance().login(usuarioOpt.get());
+                        System.out.println("Sesión iniciada para: " +
+                                SessionManager.getInstance().getLoggedUser().getEmail());
+
+                        dispose();
+                        new MainWindow().setVisible(true);
+                    } else {
+
+                        JOptionPane.showMessageDialog(null,
+                                """
+                                        Credenciales inválidas. Asegúrese que:
+                                        - La contraseña sea correcta y tenga al menos 6 caracteres""",
+                                "Error de validación",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception | DAOException ex) {
+                    System.out.println("EXCEPCIÓN: " + ex.getClass().getName());
+                    System.out.println("Mensaje: " + ex.getMessage());
+                    ex.printStackTrace();
+                    // Mostrar error
+                } finally {
+                    Arrays.fill(passwordChars, '\0');
+                    System.out.println("Limpieza completada");
                 }
             }
         });
@@ -56,7 +117,11 @@ public class LoginWindow extends JFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RegisterDialog(LoginWindow.this).setVisible(true);
+                try {
+                    new RegisterDialog(LoginWindow.this).setVisible(true);
+                } catch (DAOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 

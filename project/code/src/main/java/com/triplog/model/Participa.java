@@ -25,6 +25,17 @@ public class Participa {
     @Column(name = "es_organizador", nullable = false)
     private Boolean esOrganizador = false;
 
+    public Participa() {
+    }
+
+    // Constructor conveniente
+    public Participa(Viaje viaje, Usuario usuario, boolean esOrganizador) {
+        this.idViaje = viaje;
+        this.idUsuario = usuario;
+        this.esOrganizador = esOrganizador;
+        this.id = new ParticipaId(viaje.getId(), usuario.getId());
+    }
+
     public ParticipaId getId() {
         return id;
     }

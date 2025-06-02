@@ -14,7 +14,7 @@ public class Viaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_viaje", nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "titulo", nullable = false, length = 50)
     private String titulo;
@@ -45,11 +45,21 @@ public class Viaje {
     @ManyToMany
     private Set<Lugar> lugars = new LinkedHashSet<>();
 
-    public Integer getId() {
+    public Viaje(){}
+
+    public Viaje(String titulo, String destino, LocalDate fechaInicio, LocalDate fechaFin, Usuario idCreador) {
+        this.titulo = titulo;
+        this.destino = destino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.idCreador = idCreador;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

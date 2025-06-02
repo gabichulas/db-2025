@@ -1,8 +1,11 @@
 package com.triplog.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "ubicacion", schema = "triplog")
@@ -21,6 +24,30 @@ public class Ubicacion {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_lugar", nullable = false)
     private Lugar idLugar;
+
+    @ColumnDefault("'9999-01-01'")
+    @Column(name = "fecha_fin_visita", nullable = false)
+    private LocalDate fechaFinVisita;
+
+    @ColumnDefault("'9999-01-01'")
+    @Column(name = "fecha_inicio_visita", nullable = false)
+    private LocalDate fechaInicioVisita;
+
+    public LocalDate getFechaInicioVisita() {
+        return fechaInicioVisita;
+    }
+
+    public void setFechaInicioVisita(LocalDate fechaInicioVisita) {
+        this.fechaInicioVisita = fechaInicioVisita;
+    }
+
+    public LocalDate getFechaFinVisita() {
+        return fechaFinVisita;
+    }
+
+    public void setFechaFinVisita(LocalDate fechaFinVisita) {
+        this.fechaFinVisita = fechaFinVisita;
+    }
 
     public UbicacionId getId() {
         return id;
