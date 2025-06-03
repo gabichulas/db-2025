@@ -2,6 +2,7 @@ package com.triplog.ui;
 
 import com.triplog.model.Tarea;
 import com.triplog.model.Viaje;
+import com.triplog.util.GeneralUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,7 +14,8 @@ class TasksPanel extends JPanel {
     public TasksPanel(Viaje viaje) {
         setLayout(new BorderLayout(5, 5));
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
+        GeneralUtils utils = new GeneralUtils();
+        utils.setFavicon();
         // Título
         JLabel titleLabel = new JLabel("Tareas para: " + viaje.getTitulo(), SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));

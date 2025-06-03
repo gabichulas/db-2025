@@ -3,6 +3,7 @@ package com.triplog.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -44,6 +45,8 @@ public class Viaje {
 
     @ManyToMany
     private Set<Lugar> lugars = new LinkedHashSet<>();
+
+
 
     public Viaje(){}
 

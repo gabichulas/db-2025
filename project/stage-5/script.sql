@@ -58,50 +58,47 @@ CREATE TABLE triplog.GASTA (
     PRIMARY KEY (id_usuario, id_gasto)
 );
 
-
---------------------------------
-
--- 1. Insertar 15 usuarios con contraseñas hasheadas (bcrypt)
+-- 1. Insertar 15 usuarios con contrasenas hasheadas (bcrypt)
 INSERT INTO triplog.USUARIO (nombre, email, contrasena) VALUES
-('Juan Pérez', 'juan.perez@triplog.com', '$2a$10$a./gqAxBDlDvikPHH8cK/OkP/AhliuLoC/xH6oNy2exwhtnPF1npG'), -- juan123
-('María García', 'maria.garcia@triplog.com', '$2a$10$lBKI9gzKMUMXY0PPX7sN3.Becx2mMwjDuoKM5iM6zDdXntuxUmOFi'), -- mariaSecure!
-('Carlos López', 'carlos.lopez@triplog.com', '$2a$10$yTMkBb3T/AlXH4JO8vIl/.OSnl8MC/IiBKteP1uE12gDQnnD91Sra'), -- lopezPass1
-('Ana Martínez', 'ana.martinez@triplog.com', '$2a$10$U.1K.VLiXyakdFFInMZyf.kM.swye7MS2lK5FUfCNGHGA3Q1Hvr8y'), -- anaMartinez2
-('Pedro Sánchez', 'pedro.sanchez@triplog.com', '$2a$10$4A14LZNjdQ2i/ANhsx7dHOs6mlE0W5F4eI64Tecnx1oDttOE.nkIe'), -- pedroSanchez3
-('Lucía Fernández', 'lucia.fernandez@triplog.com', '$2a$10$0wDM.oiD82OJy8e6V9OaCe8JYYDtrTS4ghxid6no6XxJAykJ/6e76'), -- luciaFer2023
-('Diego Rodríguez', 'diego.rodriguez@triplog.com', '$2a$10$LdWkRae8/bemELezD1c3q.oAuih/9AxfDTgqOBZ9E.Cl3ygPsZVVS'), -- diegoR456
-('Sofía González', 'sofia.gonzalez@triplog.com', '$2a$10$wHsR..RzG8VR6r298GF/8.e1ZhRQEbBrF0RQQ/kq0PLItgNSwYuPy'), -- sofiGonza!
-('Martín Díaz', 'martin.diaz@triplog.com', '$2a$10$JWLwKtpT8jHVo/1sLepS4eWze51pW1SmRDYrn0eM66kzdJ5ZVkYKK'), -- martinD789
-('Valentina Morales', 'valentina.morales@triplog.com', '$2a$10$flr6g6qhP2NDamfBqsjNEuBUE3.ehVb2g7Wf8OTeVpMMpTuqxg9Ii'), -- valeMorales1
-('Facundo Luna', 'facundo.luna@triplog.com', '$2a$10$L4vUDclirXcGox8EH7krP.gEtQowZ9RXNN6W8x97zywHHDpdqQbPG'), -- facuLuna2023
-('Camila Herrera', 'camila.herrera@triplog.com', '$2a$10$URaO..mltAkGXRQ65LUkvOLRjFpQAwUTnefM5Rlws68K.MKynSxbO'), -- camiHerrera!
-('Gonzalo Castro', 'gonzalo.castro@triplog.com', '$2a$10$.alXtENIMJGAlIYSAE8NHe0h8Wzqrxeu1..ljO4UaSv5o0MKVJNo.'), -- gonzaCastro2
-('Florencia Ríos', 'florencia.rios@triplog.com', '$2a$10$3fpIpPD0V0F58XW3PybVY.W0ZuB.uutlsgRxIK8h0VvRdjMzkhyK.'), -- florRios2023
-('Lautaro Méndez', 'lautaro.mendez@triplog.com', '$2a$10$bGbM.a2jiabbv3OfkRyII.RpzaW1W953/Jn6ZSttgnDRPYj7VR2JC'); -- lautaMendez!
+('Juan Perez', 'juan.perez@triplog.com', '$2a$10$a./gqAxBDlDvikPHH8cK/OkP/AhliuLoC/xH6oNy2exwhtnPF1npG'),
+('Maria Garcia', 'maria.garcia@triplog.com', '$2a$10$lBKI9gzKMUMXY0PPX7sN3.Becx2mMwjDuoKM5iM6zDdXntuxUmOFi'),
+('Carlos Lopez', 'carlos.lopez@triplog.com', '$2a$10$yTMkBb3T/AlXH4JO8vIl/.OSnl8MC/IiBKteP1uE12gDQnnD91Sra'),
+('Ana Martinez', 'ana.martinez@triplog.com', '$2a$10$U.1K.VLiXyakdFFInMZyf.kM.swye7MS2lK5FUfCNGHGA3Q1Hvr8y'),
+('Pedro Sanchez', 'pedro.sanchez@triplog.com', '$2a$10$4A14LZNjdQ2i/ANhsx7dHOs6mlE0W5F4eI64Tecnx1oDttOE.nkIe'),
+('Lucia Fernandez', 'lucia.fernandez@triplog.com', '$2a$10$0wDM.oiD82OJy8e6V9OaCe8JYYDtrTS4ghxid6no6XxJAykJ/6e76'),
+('Diego Rodriguez', 'diego.rodriguez@triplog.com', '$2a$10$LdWkRae8/bemELezD1c3q.oAuih/9AxfDTgqOBZ9E.Cl3ygPsZVVS'),
+('Sofia Gonzalez', 'sofia.gonzalez@triplog.com', '$2a$10$wHsR..RzG8VR6r298GF/8.e1ZhRQEbBrF0RQQ/kq0PLItgNSwYuPy'),
+('Martin Diaz', 'martin.diaz@triplog.com', '$2a$10$JWLwKtpT8jHVo/1sLepS4eWze51pW1SmRDYrn0eM66kzdJ5ZVkYKK'),
+('Valentina Morales', 'valentina.morales@triplog.com', '$2a$10$flr6g6qhP2NDamfBqsjNEuBUE3.ehVb2g7Wf8OTeVpMMpTuqxg9Ii'),
+('Facundo Luna', 'facundo.luna@triplog.com', '$2a$10$L4vUDclirXcGox8EH7krP.gEtQowZ9RXNN6W8x97zywHHDpdqQbPG'),
+('Camila Herrera', 'camila.herrera@triplog.com', '$2a$10$URaO..mltAkGXRQ65LUkvOLRjFpQAwUTnefM5Rlws68K.MKynSxbO'),
+('Gonzalo Castro', 'gonzalo.castro@triplog.com', '$2a$10$.alXtENIMJGAlIYSAE8NHe0h8Wzqrxeu1..ljO4UaSv5o0MKVJNo.'),
+('Florencia Rios', 'florencia.rios@triplog.com', '$2a$10$3fpIpPD0V0F58XW3PybVY.W0ZuB.uutlsgRxIK8h0VvRdjMzkhyK.'),
+('Lautaro Mendez', 'lautaro.mendez@triplog.com', '$2a$10$bGbM.a2jiabbv3OfkRyII.RpzaW1W953/Jn6ZSttgnDRPYj7VR2JC');
 
 -- 2. Insertar 10 viajes con diversos destinos y fechas
 INSERT INTO triplog.VIAJE (titulo, destino, fecha_inicio, fecha_fin, id_creador) VALUES
 ('Aventura en Bariloche', 'San Carlos de Bariloche', '2023-12-15', '2023-12-22', 1),
-('Fin de semana en Córdoba', 'Villa Carlos Paz', '2024-01-20', '2024-01-23', 2),
+('Fin de semana en Cordoba', 'Villa Carlos Paz', '2024-01-20', '2024-01-23', 2),
 ('Explorando Mendoza', 'Mendoza', '2024-02-10', '2024-02-17', 3),
 ('Playas en Mar del Plata', 'Mar del Plata', '2024-03-05', '2024-03-12', 1),
 ('Cultura en Buenos Aires', 'Buenos Aires', '2024-04-15', '2024-04-20', 4),
-('Ecoturismo en Iguazú', 'Puerto Iguazú', '2024-05-10', '2024-05-17', 5),
+('Ecoturismo en Iguazu', 'Puerto Iguazu', '2024-05-10', '2024-05-17', 5),
 ('Aventura en Salta', 'Salta', '2024-06-01', '2024-06-10', 6),
 ('Nieve en Ushuaia', 'Ushuaia', '2024-07-15', '2024-07-25', 7),
 ('Ruta del vino en Cafayate', 'Cafayate', '2024-08-12', '2024-08-18', 8),
-('Carnaval en Gualeguaychú', 'Gualeguaychú', '2025-02-10', '2025-02-15', 9),
-('Turismo histórico en Rosario', 'Rosario', '2024-09-05', '2024-09-08', 10),
-('Relax en Termas de Río Hondo', 'Termas de Río Hondo', '2024-10-20', '2024-10-27', 11),
-('Aventura en El Chaltén', 'El Chaltén', '2024-11-15', '2024-11-25', 12),
+('Carnaval en Gualeguaychu', 'Gualeguaychu', '2025-02-10', '2025-02-15', 9),
+('Turismo historico en Rosario', 'Rosario', '2024-09-05', '2024-09-08', 10),
+('Relax en Termas de Rio Hondo', 'Termas de Rio Hondo', '2024-10-20', '2024-10-27', 11),
+('Aventura en El Chalten', 'El Chalten', '2024-11-15', '2024-11-25', 12),
 ('Turismo rural en San Antonio de Areco', 'San Antonio de Areco', '2024-12-10', '2024-12-12', 13),
-('Año nuevo en Pinamar', 'Pinamar', '2024-12-28', '2025-01-05', 14);
+('Ano nuevo en Pinamar', 'Pinamar', '2024-12-28', '2025-01-05', 14);
 
 -- 3. Insertar participantes en los viajes (entre 3 y 8 participantes por viaje)
 INSERT INTO triplog.PARTICIPA (id_viaje, id_usuario, es_organizador) VALUES
 -- Viaje 1 (Bariloche)
 (1, 1, TRUE), (1, 2, FALSE), (1, 3, FALSE), (1, 4, FALSE), (1, 5, FALSE),
--- Viaje 2 (Córdoba)
+-- Viaje 2 (Cordoba)
 (2, 2, TRUE), (2, 4, FALSE), (2, 6, FALSE), (2, 8, FALSE),
 -- Viaje 3 (Mendoza)
 (3, 3, TRUE), (3, 1, FALSE), (3, 5, FALSE), (3, 7, FALSE), (3, 9, FALSE),
@@ -109,7 +106,7 @@ INSERT INTO triplog.PARTICIPA (id_viaje, id_usuario, es_organizador) VALUES
 (4, 1, TRUE), (4, 5, FALSE), (4, 10, FALSE),
 -- Viaje 5 (Buenos Aires)
 (5, 4, TRUE), (5, 2, FALSE), (5, 3, FALSE), (5, 6, FALSE), (5, 7, FALSE),
--- Viaje 6 (Iguazú)
+-- Viaje 6 (Iguazu)
 (6, 5, TRUE), (6, 1, FALSE), (6, 3, FALSE), (6, 7, FALSE), (6, 9, FALSE), (6, 11, FALSE),
 -- Viaje 7 (Salta)
 (7, 6, TRUE), (7, 8, FALSE), (7, 10, FALSE), (7, 12, FALSE),
@@ -117,13 +114,13 @@ INSERT INTO triplog.PARTICIPA (id_viaje, id_usuario, es_organizador) VALUES
 (8, 7, TRUE), (8, 9, FALSE), (8, 11, FALSE), (8, 13, FALSE), (8, 15, FALSE),
 -- Viaje 9 (Cafayate)
 (9, 8, TRUE), (9, 10, FALSE), (9, 12, FALSE), (9, 14, FALSE),
--- Viaje 10 (Gualeguaychú)
+-- Viaje 10 (Gualeguaychu)
 (10, 9, TRUE), (10, 11, FALSE), (10, 13, FALSE), (10, 15, FALSE),
 -- Viaje 11 (Rosario)
 (11, 10, TRUE), (11, 12, FALSE), (11, 14, FALSE),
--- Viaje 12 (Termas de Río Hondo)
+-- Viaje 12 (Termas de Rio Hondo)
 (12, 11, TRUE), (12, 13, FALSE), (12, 15, FALSE), (12, 2, FALSE), (12, 4, FALSE),
--- Viaje 13 (El Chaltén)
+-- Viaje 13 (El Chalten)
 (13, 12, TRUE), (13, 14, FALSE), (13, 1, FALSE), (13, 3, FALSE), (13, 5, FALSE),
 -- Viaje 14 (San Antonio de Areco)
 (14, 13, TRUE), (14, 15, FALSE), (14, 2, FALSE), (14, 4, FALSE),
@@ -139,128 +136,113 @@ INSERT INTO triplog.LUGAR (nombre, direccion, fecha_visita) VALUES
 ('Cerro Otto', 'Av. de los Pioneros km 5', '2023-12-19'),
 ('Circuito Chico', 'Ruta 77', '2023-12-20'),
 
--- Lugares para Córdoba (Viaje 2)
-('Reloj Cucú', 'Av. Uruguay esq. Av. San Martín', '2024-01-21'),
+-- Lugares para Cordoba (Viaje 2)
+('Reloj Cucu', 'Av. Uruguay esq. Av. San Martin', '2024-01-21'),
 ('Dique San Roque', '', '2024-01-22'),
 ('Museo del Che Guevara', 'Av. Alta Gracia', '2024-01-22'),
-('Cabaña del Peñón', '', '2024-01-23'),
+('Cabana del Penon', '', '2024-01-23'),
 
 -- Lugares para Mendoza (Viaje 3)
 ('Bodega Trapiche', 'Nueva Mayorga s/n, Coquimbito', '2024-02-12'),
 ('Cerro Aconcagua', 'Parque Provincial Aconcagua', '2024-02-14'),
-('Parque General San Martín', 'Av. Emilio Civit 701', '2024-02-13'),
+('Parque General San Martin', 'Av. Emilio Civit 701', '2024-02-13'),
 ('Termas de Cacheuta', 'Ruta 82 km 38', '2024-02-15'),
 
 -- Lugares para Mar del Plata (Viaje 4)
 ('Playa Grande', 'Av. Peralta Ramos 2500', '2024-03-07'),
 ('Puerto Mar del Plata', 'J. L. Borges 250', '2024-03-08'),
 ('Torre Tanque', 'Falucho 995', '2024-03-09'),
-('Museo MAR', 'Av. Félix U. Camet 3510', '2024-03-10'),
+('Museo MAR', 'Av. Felix U. Camet 3510', '2024-03-10'),
 
 -- Lugares para Buenos Aires (Viaje 5)
-('Teatro Colón', 'Cerrito 628', '2024-04-16'),
+('Teatro Colon', 'Cerrito 628', '2024-04-16'),
 ('Caminito', 'Del Valle Iberlucea 800', '2024-04-17'),
-('Recoleta', 'Junín 1760', '2024-04-18'),
+('Recoleta', 'Junin 1760', '2024-04-18'),
 ('Tigre Delta', '', '2024-04-19'),
 
--- Lugares para Iguazú (Viaje 6)
-('Cataratas del Iguazú', 'Parque Nacional Iguazú', '2024-05-11'),
-('Garganta del Diablo', 'Parque Nacional Iguazú', '2024-05-12'),
+-- Lugares para Iguazu (Viaje 6)
+('Cataratas del Iguazu', 'Parque Nacional Iguazu', '2024-05-11'),
+('Garganta del Diablo', 'Parque Nacional Iguazu', '2024-05-12'),
 ('Hito Tres Fronteras', 'Av. Tres Fronteras 100', '2024-05-13'),
 ('Ruinas de San Ignacio', 'Ruta 12 km 57', '2024-05-14'),
 
 -- Lugares para Salta (Viaje 7)
-('Cerro San Bernardo', 'Av. San Martín 4400', '2024-06-02'),
-('Tren a las Nubes', 'Estación de Trenes', '2024-06-03'),
+('Cerro San Bernardo', 'Av. San Martin 4400', '2024-06-02'),
+('Tren a las Nubes', 'Estacion de Trenes', '2024-06-03'),
 ('Cafayate', 'Ruta 68', '2024-06-05'),
 ('Salinas Grandes', 'Ruta 52', '2024-06-07'),
 
 -- Lugares para Ushuaia (Viaje 8)
 ('Glaciar Martial', 'Av. Luis Fernando Martial 3560', '2024-07-16'),
 ('Parque Nacional Tierra del Fuego', 'Ruta 3 km 3042', '2024-07-18'),
-('Tren del Fin del Mundo', 'Estación del Fin del Mundo', '2024-07-19'),
-('Canal Beagle', 'Puerto Turístico', '2024-07-20'),
+('Tren del Fin del Mundo', 'Estacion del Fin del Mundo', '2024-07-19'),
+('Canal Beagle', 'Puerto Turistico', '2024-07-20'),
 
 -- Lugares para Cafayate (Viaje 9)
-('Bodega El Esteco', 'Calle San Martín 415', '2024-08-13'),
+('Bodega El Esteco', 'Calle San Martin 415', '2024-08-13'),
 ('Quebrada de las Conchas', 'Ruta 68', '2024-08-14'),
-('Museo de la Vid y el Vino', 'Av. Güemes 1', '2024-08-15'),
+('Museo de la Vid y el Vino', 'Av. Guemes 1', '2024-08-15'),
 
--- Lugares para Gualeguaychú (Viaje 10)
-('Corsódromo', 'Av. Parque 1500', '2025-02-11'),
-('Termas de Gualeguaychú', 'Ruta 14 km 3', '2025-02-12'),
-('Parque Unzué', 'Av. Parque s/n', '2025-02-13'),
+-- Lugares para Gualeguaychu (Viaje 10)
+('Corsodromo', 'Av. Parque 1500', '2025-02-11'),
+('Termas de Gualeguaychu', 'Ruta 14 km 3', '2025-02-12'),
+('Parque Unzue', 'Av. Parque s/n', '2025-02-13'),
 
 -- Lugares para Rosario (Viaje 11)
 ('Monumento a la Bandera', 'Santa Fe 581', '2024-09-06'),
 ('Parque de la Independencia', 'Av. Pellegrini 1901', '2024-09-07'),
 ('La Florida', 'Av. Carrasco 3400', '2024-09-08'),
 
--- Lugares para Termas de Río Hondo (Viaje 12)
-('Termas de Río Hondo', 'Av. Costanera s/n', '2024-10-21'),
-('Autódromo', 'Ruta 9 km 795', '2024-10-22'),
+-- Lugares para Termas de Rio Hondo (Viaje 12)
+('Termas de Rio Hondo', 'Av. Costanera s/n', '2024-10-21'),
+('Autodromo', 'Ruta 9 km 795', '2024-10-22'),
 ('Dique Frontal', 'Av. Costanera', '2024-10-23'),
 
--- Lugares para El Chaltén (Viaje 13)
+-- Lugares para El Chalten (Viaje 13)
 ('Cerro Fitz Roy', 'Parque Nacional Los Glaciares', '2024-11-16'),
-('Laguna de los Tres', 'Sendero desde El Chaltén', '2024-11-18'),
-('Glaciar Viedma', 'Puerto Bahía Túnel', '2024-11-20'),
+('Laguna de los Tres', 'Sendero desde El Chalten', '2024-11-18'),
+('Glaciar Viedma', 'Puerto Bahia Tunel', '2024-11-20'),
 
 -- Lugares para San Antonio de Areco (Viaje 14)
-('Museo Gauchesco Ricardo Güiraldes', 'Camino Ricardo Güiraldes s/n', '2024-12-11'),
-('Puente Viejo', 'Zárate y Arellano', '2024-12-11'),
+('Museo Gauchesco Ricardo Guiraldes', 'Camino Ricardo Guiraldes s/n', '2024-12-11'),
+('Puente Viejo', 'Zarate y Arellano', '2024-12-11'),
 ('Parque Criollo', 'Ruta 31 km 114', '2024-12-12'),
 
 -- Lugares para Pinamar (Viaje 15)
 ('Playa de Pinamar', 'Av. Bunge y el mar', '2024-12-29'),
 ('Bosque de Pinamar', 'Av. Bunge 1550', '2024-12-30'),
-('Cariló', 'Ruta 11 km 328', '2025-01-02'),
-('Médanos Grandes', 'Ruta 11 km 312', '2025-01-03');
+('Carilo', 'Ruta 11 km 328', '2025-01-02'),
+('Medanos Grandes', 'Ruta 11 km 312', '2025-01-03');
 
 -- 5. Relacionar lugares con viajes (UBICACION)
 INSERT INTO triplog.UBICACION (id_viaje, id_lugar) VALUES
-
 (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),
-
 (2, 6), (2, 7), (2, 8), (2, 9),
-
 (3, 10), (3, 11), (3, 12), (3, 13),
-
 (4, 14), (4, 15), (4, 16), (4, 17),
-
 (5, 18), (5, 19), (5, 20), (5, 21),
-
 (6, 22), (6, 23), (6, 24), (6, 25),
-
 (7, 26), (7, 27), (7, 28), (7, 29),
-
 (8, 30), (8, 31), (8, 32), (8, 33),
-
 (9, 34), (9, 35), (9, 36),
-
 (10, 37), (10, 38), (10, 39),
-
 (11, 40), (11, 41), (11, 42),
-
 (12, 43), (12, 44), (12, 45),
-
 (13, 46), (13, 47), (13, 48),
-
 (14, 49), (14, 50), (14, 51),
-
 (15, 52), (15, 53), (15, 54), (15, 55);
 
 -- 6. Insertar tareas (3-5 tareas por viaje)
 INSERT INTO triplog.TAREA (descripcion, completada, fecha_limite, id_viaje, id_usuario_asignado) VALUES
 -- Tareas para Bariloche (Viaje 1)
 ('Reservar hotel', TRUE, '2023-11-30', 1, 1),
-('Comprar pasajes de avión', TRUE, '2023-11-15', 1, 2),
+('Comprar pasajes de avion', TRUE, '2023-11-15', 1, 2),
 ('Alquilar equipo de ski', FALSE, '2023-12-10', 1, 3),
 ('Contratar seguro de viaje', TRUE, '2023-11-20', 1, 4),
 ('Planificar itinerario diario', FALSE, '2023-12-05', 1, 5),
 
--- Tareas para Córdoba (Viaje 2)
-('Reservar cabaña', TRUE, '2024-01-05', 2, 2),
+-- Tareas para Cordoba (Viaje 2)
+('Reservar cabana', TRUE, '2024-01-05', 2, 2),
 ('Planificar ruta de viaje', FALSE, '2024-01-15', 2, 4),
 ('Comprar entradas para museos', TRUE, '2024-01-10', 2, 6),
 
@@ -278,10 +260,10 @@ INSERT INTO triplog.TAREA (descripcion, completada, fecha_limite, id_viaje, id_u
 -- Tareas para Buenos Aires (Viaje 5)
 ('Comprar entradas para teatro', TRUE, '2024-03-20', 5, 4),
 ('Investigar restaurantes', FALSE, '2024-04-01', 5, 2),
-('Reservar hotel céntrico', TRUE, '2024-03-25', 5, 3),
+('Reservar hotel centrico', TRUE, '2024-03-25', 5, 3),
 ('Planificar transporte urbano', FALSE, '2024-04-05', 5, 6),
 
--- Tareas para Iguazú (Viaje 6)
+-- Tareas para Iguazu (Viaje 6)
 ('Reservar hotel cerca del parque', TRUE, '2024-04-20', 6, 5),
 ('Comprar entradas para cataratas', TRUE, '2024-04-25', 6, 1),
 ('Contratar tour a las cataratas', FALSE, '2024-05-01', 6, 3),
@@ -290,14 +272,14 @@ INSERT INTO triplog.TAREA (descripcion, completada, fecha_limite, id_viaje, id_u
 -- Tareas para Salta (Viaje 7)
 ('Reservar hotel en Salta ciudad', TRUE, '2024-05-15', 7, 6),
 ('Comprar pasajes de bus a Cafayate', TRUE, '2024-05-20', 7, 8),
-('Reservar excursión a Salinas Grandes', FALSE, '2024-05-25', 7, 10),
+('Reservar excursion a Salinas Grandes', FALSE, '2024-05-25', 7, 10),
 ('Investigar clima y ropa necesaria', FALSE, '2024-05-28', 7, 12),
 
 -- Tareas para Ushuaia (Viaje 8)
 ('Reservar hotel con vista al canal', TRUE, '2024-06-20', 8, 7),
-('Comprar pasajes aéreos', TRUE, '2024-06-15', 8, 9),
-('Reservar excursión al parque nacional', FALSE, '2024-07-01', 8, 11),
-('Alquilar ropa térmica', FALSE, '2024-07-05', 8, 13),
+('Comprar pasajes aereos', TRUE, '2024-06-15', 8, 9),
+('Reservar excursion al parque nacional', FALSE, '2024-07-01', 8, 11),
+('Alquilar ropa termica', FALSE, '2024-07-05', 8, 13),
 ('Comprar seguro de viaje especial', TRUE, '2024-06-25', 8, 15),
 
 -- Tareas para Cafayate (Viaje 9)
@@ -305,26 +287,26 @@ INSERT INTO triplog.TAREA (descripcion, completada, fecha_limite, id_viaje, id_u
 ('Reservar tours en bodegas', TRUE, '2024-08-01', 9, 10),
 ('Alquilar auto para recorrer quebradas', FALSE, '2024-08-05', 9, 12),
 
--- Tareas para Gualeguaychú (Viaje 10)
+-- Tareas para Gualeguaychu (Viaje 10)
 ('Comprar entradas para el carnaval', TRUE, '2025-01-20', 10, 9),
-('Reservar hotel cerca del corsódromo', FALSE, '2025-01-25', 10, 11),
+('Reservar hotel cerca del corsodromo', FALSE, '2025-01-25', 10, 11),
 ('Planificar transporte desde Buenos Aires', FALSE, '2025-02-01', 10, 13),
 
 -- Tareas para Rosario (Viaje 11)
-('Reservar hotel cerca del río', TRUE, '2024-08-20', 11, 10),
+('Reservar hotel cerca del rio', TRUE, '2024-08-20', 11, 10),
 ('Investigar museos y actividades', FALSE, '2024-08-25', 11, 12),
 ('Planificar recorrido del monumento', FALSE, '2024-09-01', 11, 14),
 
--- Tareas para Termas de Río Hondo (Viaje 12)
+-- Tareas para Termas de Rio Hondo (Viaje 12)
 ('Reservar hotel con spa termal', TRUE, '2024-09-25', 12, 11),
 ('Comprar accesorios para piscina', FALSE, '2024-10-10', 12, 13),
 ('Investigar tratamientos termales', FALSE, NULL, 12, 15),
 
--- Tareas para El Chaltén (Viaje 13)
-('Reservar hostería en El Chaltén', TRUE, '2024-10-20', 13, 12),
+-- Tareas para El Chalten (Viaje 13)
+('Reservar hosteria en El Chalten', TRUE, '2024-10-20', 13, 12),
 ('Alquilar equipo de trekking', FALSE, '2024-11-01', 13, 14),
-('Contratar guía para el Fitz Roy', FALSE, '2024-11-05', 13, 1),
-('Preparar botiquín de primeros auxilios', TRUE, '2024-11-10', 13, 3),
+('Contratar guia para el Fitz Roy', FALSE, '2024-11-05', 13, 1),
+('Preparar botiquin de primeros auxilios', TRUE, '2024-11-10', 13, 3),
 
 -- Tareas para San Antonio de Areco (Viaje 14)
 ('Reservar estancia para alojamiento', TRUE, '2024-11-25', 14, 13),
@@ -332,23 +314,23 @@ INSERT INTO triplog.TAREA (descripcion, completada, fecha_limite, id_viaje, id_u
 ('Planificar visita a talleres artesanales', FALSE, NULL, 14, 2),
 
 -- Tareas para Pinamar (Viaje 15)
-('Reservar casa para año nuevo', TRUE, '2024-11-15', 15, 14),
-('Comprar comida para la estadía', FALSE, '2024-12-20', 15, 1),
+('Reservar casa para ano nuevo', TRUE, '2024-11-15', 15, 14),
+('Comprar comida para la estadia', FALSE, '2024-12-20', 15, 1),
 ('Organizar transporte desde Buenos Aires', TRUE, '2024-12-15', 15, 3),
-('Planificar actividades para niños', FALSE, '2024-12-22', 15, 5),
-('Reservar restaurante para año nuevo', TRUE, '2024-12-10', 15, 7);
+('Planificar actividades para ninos', FALSE, '2024-12-22', 15, 5),
+('Reservar restaurante para ano nuevo', TRUE, '2024-12-10', 15, 7);
 
 -- 7. Insertar gastos (3-5 gastos por viaje)
 INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 -- Gastos para Bariloche (Viaje 1)
 (120000.00, 'Hotel 7 noches'),
-(85000.50, 'Pasajes aéreos'),
+(85000.50, 'Pasajes aereos'),
 (15000.75, 'Alquiler de equipo de ski'),
 (5000.00, 'Seguro de viaje'),
 (20000.00, 'Excursiones varias'),
 
--- Gastos para Córdoba (Viaje 2)
-(45000.00, 'Cabaña 3 noches'),
+-- Gastos para Cordoba (Viaje 2)
+(45000.00, 'Cabana 3 noches'),
 (8000.00, 'Combustible'),
 (5000.00, 'Entradas a museos'),
 (12000.00, 'Comidas'),
@@ -366,12 +348,12 @@ INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 (15000.00, 'Comidas y helados'),
 
 -- Gastos para Buenos Aires (Viaje 5)
-(15000.00, 'Entradas Teatro Colón'),
+(15000.00, 'Entradas Teatro Colon'),
 (20000.00, 'Cena en restaurante'),
 (40000.00, 'Hotel 5 noches'),
 (8000.00, 'Transporte urbano'),
 
--- Gastos para Iguazú (Viaje 6)
+-- Gastos para Iguazu (Viaje 6)
 (75000.00, 'Hotel 7 noches'),
 (12000.00, 'Entradas al parque'),
 (18000.00, 'Tour a las cataratas'),
@@ -380,14 +362,14 @@ INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 -- Gastos para Salta (Viaje 7)
 (55000.00, 'Hotel 9 noches'),
 (10000.00, 'Pasajes a Cafayate'),
-(15000.00, 'Excursión a Salinas'),
-(20000.00, 'Comidas típicas'),
+(15000.00, 'Excursion a Salinas'),
+(20000.00, 'Comidas tipicas'),
 
 -- Gastos para Ushuaia (Viaje 8)
 (90000.00, 'Hotel 10 noches'),
-(120000.00, 'Pasajes aéreos'),
-(25000.00, 'Excursión al parque'),
-(15000.00, 'Alquiler ropa térmica'),
+(120000.00, 'Pasajes aereos'),
+(25000.00, 'Excursion al parque'),
+(15000.00, 'Alquiler ropa termica'),
 (8000.00, 'Seguro especial'),
 
 -- Gastos para Cafayate (Viaje 9)
@@ -396,7 +378,7 @@ INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 (25000.00, 'Alquiler de auto'),
 (10000.00, 'Degustaciones'),
 
--- Gastos para Gualeguaychú (Viaje 10)
+-- Gastos para Gualeguaychu (Viaje 10)
 (30000.00, 'Entradas carnaval'),
 (40000.00, 'Hotel 5 noches'),
 (8000.00, 'Transporte'),
@@ -406,16 +388,16 @@ INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 (5000.00, 'Entradas a museos'),
 (10000.00, 'Comidas'),
 
--- Gastos para Termas de Río Hondo (Viaje 12)
+-- Gastos para Termas de Rio Hondo (Viaje 12)
 (60000.00, 'Hotel con spa 7 noches'),
 (5000.00, 'Accesorios piscina'),
 (15000.00, 'Tratamientos termales'),
 
--- Gastos para El Chaltén (Viaje 13)
-(50000.00, 'Hostería 10 noches'),
+-- Gastos para El Chalten (Viaje 13)
+(50000.00, 'Hosteria 10 noches'),
 (15000.00, 'Alquiler equipo trekking'),
-(20000.00, 'Guía para excursión'),
-(5000.00, 'Botiquín'),
+(20000.00, 'Guia para excursion'),
+(5000.00, 'Botiquin'),
 
 -- Gastos para San Antonio de Areco (Viaje 14)
 (45000.00, 'Estancia 2 noches'),
@@ -424,10 +406,10 @@ INSERT INTO triplog.GASTO (monto, descripcion) VALUES
 
 -- Gastos para Pinamar (Viaje 15)
 (120000.00, 'Casa 8 noches'),
-(30000.00, 'Comida para estadía'),
+(30000.00, 'Comida para estadia'),
 (15000.00, 'Transporte'),
-(25000.00, 'Cena año nuevo'),
-(20000.00, 'Actividades niños');
+(25000.00, 'Cena ano nuevo'),
+(20000.00, 'Actividades ninos');
 
 -- 8. Relacionar gastos con viajes y usuarios (GASTA)
 INSERT INTO triplog.GASTA (id_viaje, id_usuario, id_gasto) VALUES
@@ -443,8 +425,8 @@ INSERT INTO triplog.GASTA (id_viaje, id_usuario, id_gasto) VALUES
 -- Excursiones grupo completo (gasto 5)
 (1, 1, 5), (1, 2, 5), (1, 3, 5), (1, 4, 5), (1, 5, 5),
 
--- Córdoba (Viaje 2)
--- Cabaña compartida 2 usuarios (gasto 6)
+-- Cordoba (Viaje 2)
+-- Cabana compartida 2 usuarios (gasto 6)
 (2, 2, 6), (2, 4, 6),
 -- Combustible dividido 4 (gasto 7)
 (2, 2, 7), (2, 4, 7), (2, 6, 7), (2, 8, 7),
@@ -467,7 +449,7 @@ INSERT INTO triplog.GASTA (id_viaje, id_usuario, id_gasto) VALUES
 (4, 1, 14), (4, 5, 15), (4, 10, 16), (4, 1, 17),
 -- Buenos Aires (Viaje 5)
 (5, 4, 18), (5, 2, 19), (5, 3, 20), (5, 6, 21),
--- Iguazú (Viaje 6)
+-- Iguazu (Viaje 6)
 (6, 5, 22), (6, 1, 23), (6, 3, 24), (6, 7, 25),
 -- Salta (Viaje 7)
 (7, 6, 26), (7, 8, 27), (7, 10, 28), (7, 12, 29),

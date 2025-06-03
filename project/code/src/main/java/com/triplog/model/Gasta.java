@@ -27,6 +27,8 @@ public class Gasta {
     @JoinColumn(name = "id_viaje")
     private Viaje idViaje;
 
+    public Gasta() {}
+
     public GastaId getId() {
         return id;
     }

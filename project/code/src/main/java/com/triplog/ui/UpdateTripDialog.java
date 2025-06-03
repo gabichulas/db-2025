@@ -1,6 +1,5 @@
 package com.triplog.ui;
 import com.triplog.dao.DAOException;
-import com.triplog.dao.impl.GenericDAOHibernate;
 import com.triplog.dao.impl.ParticipaDAOHibernate;
 import com.triplog.dao.impl.UsuarioDAOHibernate;
 import com.triplog.dao.impl.ViajeDAOHibernate;
@@ -21,15 +20,20 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class NewTripDialog extends JDialog {
-    public NewTripDialog(JFrame parent) {
-        super(parent, "Nuevo Viaje", true);
+public class UpdateTripDialog extends JDialog {
+    private Viaje viaje;  // Viaje que estamos editando
+
+    public UpdateTripDialog(JFrame parent, Viaje viaje) throws DAOException {
+        super(parent, "Editar Viaje", true);
+        this.viaje = viaje;
         setSize(500, 400);
         setLocationRelativeTo(parent);
 
         Usuario actual = SessionManager.getInstance().getLoggedUser();
 
+        // DAOs (igual que en NewTripDialog)
         UsuarioDAOHibernate dao = new UsuarioDAOHibernate() {
             @Override
             public List<Usuario> findByGasto(Long idGasto) throws DAOException {
@@ -56,35 +60,46 @@ public class NewTripDialog extends JDialog {
 
         // Formulario
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 5, 10));
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         dateFormat.setLenient(false);
 
+        // Campos del formulario
         JLabel nameLabel = new JLabel("Nombre del viaje:");
-        JTextField nameField = new JTextField();
+        JTextField nameField = new JTextField(viaje.getTitulo());  // Cargar valor existente
 
         JLabel destinoLabel = new JLabel("Destino del viaje (provincia/ciudad):");
-        JTextField destinoField = new JTextField();
+        JTextField destinoField = new JTextField(viaje.getDestino());  // Cargar valor existente
 
         JLabel startLabel = new JLabel("Fecha inicio:");
         JFormattedTextField startField = new JFormattedTextField(dateFormat);
+        startField.setValue(Date.from(viaje.getFechaInicio().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         JLabel endLabel = new JLabel("Fecha fin:");
         JFormattedTextField endField = new JFormattedTextField(dateFormat);
+        if (viaje.getFechaFin() != null) {
+            endField.setValue(Date.from(viaje.getFechaFin().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        }
 
         JLabel participantsLabel = new JLabel("Participantes:");
-
         DefaultListModel<String> participantsModel = new DefaultListModel<>();
         JList<String> participantsList = new JList<>(participantsModel);
         participantsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        List<Usuario> participaciones = dao.getParticipantesDelViaje(viaje.getId());
+        // Cargar participantes existentes (excluyendo al creador)
+        participaciones.stream()
+                .filter(p -> !p.equals(actual))
+                .map(Usuario::getEmail)
+                .forEach(participantsModel::addElement);
+        participantsModel.removeElement(actual.getEmail());
+        // Botón para agregar participantes (igual que en NewTripDialog)
         JButton addParticipantButton = new JButton("Agregar Participante");
         addParticipantButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                JDialog participantDialog = new JDialog(NewTripDialog.this, "Agregar Participante", true);
+                JDialog participantDialog = new JDialog(UpdateTripDialog.this, "Agregar Participante", true);
                 participantDialog.setSize(300, 150);
-                participantDialog.setLocationRelativeTo(NewTripDialog.this);
+                participantDialog.setLocationRelativeTo(UpdateTripDialog.this);
 
                 JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
                 panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -133,6 +148,7 @@ public class NewTripDialog extends JDialog {
             }
         });
 
+        // Añadir componentes al formulario
         formPanel.add(nameLabel);
         formPanel.add(nameField);
         formPanel.add(destinoLabel);
@@ -147,120 +163,139 @@ public class NewTripDialog extends JDialog {
 
         // Botones
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton saveButton = new JButton("Guardar");
+        JButton saveButton = new JButton("Guardar Cambios");
         JButton cancelButton = new JButton("Cancelar");
 
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = nameField.getText().trim();
-                String destino = destinoField.getText().trim();  // Obtener y limpiar el texto
-                LocalDate start = getFechaFromField(startField);
-                LocalDate end = getFechaFromField(endField);
+        saveButton.addActionListener(e -> {
+            String nombre = nameField.getText().trim();
+            String destino = destinoField.getText().trim();
+            LocalDate start = getFechaFromField(startField);
+            LocalDate end = getFechaFromField(endField);
 
-                // Validar campos obligatorios
-                if (nombre.isEmpty() || destino.isEmpty() || start == null || end == null) {
-                    JOptionPane.showMessageDialog(
-                            NewTripDialog.this,
-                            "Todos los campos son obligatorios",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                    return;
-                }
+            // Validaciones (se mantienen igual)
+            if (nombre.isEmpty() || destino.isEmpty() || start == null || end == null) {
+                JOptionPane.showMessageDialog(
+                        UpdateTripDialog.this,
+                        "Todos los campos son obligatorios",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
 
-                // Validar que la fecha de fin sea posterior a la de inicio
-                if (end.isBefore(start)) {
-                    JOptionPane.showMessageDialog(
-                            NewTripDialog.this,
-                            "La fecha de fin debe ser posterior a la de inicio",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                    return;
-                }
-                Enumeration<String> emails = participantsModel.elements();
-                Set<Participa> participaciones = new HashSet<>();
-                Viaje newViaje = new Viaje();
-                newViaje.setTitulo(nombre);
-                newViaje.setDestino(destino);
-                newViaje.setFechaInicio(start);
-                newViaje.setFechaFin(end);
-                newViaje.setIdCreador(SessionManager.getInstance().getLoggedUser());
+            if (end.isBefore(start)) {
+                JOptionPane.showMessageDialog(
+                        UpdateTripDialog.this,
+                        "La fecha de fin debe ser posterior a la de inicio",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
 
-                Viaje savedViaje = null;
-                try {
-                    savedViaje = vdao.save(newViaje);
-                } catch (DAOException ex) {
-                    throw new RuntimeException(ex);
-                }
+            try {
+                // 1. Actualizar los datos básicos del viaje
+                viaje.setTitulo(nombre);
+                viaje.setDestino(destino);
+                viaje.setFechaInicio(start);
+                viaje.setFechaFin(end);
 
-                Participa creador = new Participa();
-                ParticipaId creadorId = new ParticipaId();
-                creadorId.setIdUsuario(actual.getId());
-                creadorId.setIdViaje(savedViaje.getId());
-                creador.setIdUsuario(actual);
-                creador.setIdViaje(savedViaje);
-                creador.setEsOrganizador(true);
-                creador.setId(creadorId);
-                try {
-                    pdao.save(creador);
-                } catch (DAOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                participaciones.add(creador);
+                // 2. Actualizar las participaciones (primero eliminaciones, luego inserciones)
+                updateParticipantes(viaje, participantsModel, dao, pdao, actual);
 
-                while (emails.hasMoreElements()) {
-                    String email = emails.nextElement();
-                    Optional<Usuario> usuarioOpt;
-                    try {
-                        usuarioOpt = dao.findByEmail(email);
-                    } catch (DAOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    Participa participacion = new Participa();
-                    ParticipaId participacionId = new ParticipaId();
-                    participacionId.setIdViaje(savedViaje.getId());
-                    participacionId.setIdUsuario(usuarioOpt.get().getId());
-                    participacion.setIdUsuario(usuarioOpt.get());
-                    participacion.setIdViaje(savedViaje);
-                    participacion.setEsOrganizador(false);
-                    participacion.setId(participacionId);
-                    try {
-                        pdao.save(participacion);
-                    } catch (DAOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
-                    participaciones.add(participacion);
-                }
-
-                savedViaje.setParticipas(participaciones);
+                // 3. Guardar el viaje actualizado (una sola vez)
+                vdao.update(viaje);
 
                 JOptionPane.showMessageDialog(
-                        NewTripDialog.this,
-                        "El viaje se ha creado correctamente",
-                        "Exito",
+                        UpdateTripDialog.this,
+                        "Viaje actualizado correctamente",
+                        "Éxito",
                         JOptionPane.INFORMATION_MESSAGE
                 );
                 dispose();
+            } catch (Exception | DAOException ex) {
+                JOptionPane.showMessageDialog(
+                        UpdateTripDialog.this,
+                        "Error al actualizar el viaje: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        cancelButton.addActionListener(e -> dispose());
 
         buttonPanel.add(saveButton);
         buttonPanel.add(cancelButton);
 
         mainPanel.add(formPanel, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
         add(mainPanel);
+    }
+
+    private void updateParticipantes(Viaje viaje, DefaultListModel<String> participantsModel,
+                                     UsuarioDAOHibernate dao, ParticipaDAOHibernate pdao,
+                                     Usuario actual) throws DAOException {
+        try {
+            // 1. Obtener TODOS los participantes actuales desde la BD (frescos)
+            List<Participa> participacionesActuales = pdao.findByViaje(viaje.getId());
+            Set<String> emailsActualesBD = participacionesActuales.stream()
+                    .map(p -> p.getIdUsuario().getEmail())
+                    .collect(Collectors.toSet());
+
+            // 2. Obtener emails seleccionados en la UI (sin el creador)
+            Set<String> emailsSeleccionadosUI = Collections.list(participantsModel.elements())
+                    .stream()
+                    .collect(Collectors.toSet());
+
+            // 3. El creador siempre debe estar incluido
+            emailsSeleccionadosUI.add(actual.getEmail());
+
+            // 4. Identificar REALMENTE qué hay que eliminar
+            List<Participa> paraEliminar = participacionesActuales.stream()
+                    .filter(p -> !p.getIdUsuario().equals(actual)) // Nunca eliminar al creador
+                    .filter(p -> !emailsSeleccionadosUI.contains(p.getIdUsuario().getEmail()))
+                    .collect(Collectors.toList());
+
+            // 5. Identificar REALMENTE qué hay que agregar
+            Set<String> paraAgregar = emailsSeleccionadosUI.stream()
+                    .filter(email -> !emailsActualesBD.contains(email))
+                    .collect(Collectors.toSet());
+
+            // 6. Procesar eliminaciones primero
+            for (Participa p : paraEliminar) {
+                pdao.delete(p);
+                viaje.getParticipas().remove(p);
+            }
+
+            // 7. Procesar nuevas participaciones
+            for (String email : paraAgregar) {
+                Usuario usuario = dao.findByEmail(email)
+                        .orElseThrow(() -> new Exception("Usuario no encontrado: " + email));
+
+                // Verificación EXTRA para asegurar que no existe
+                boolean yaExiste = viaje.getParticipas().stream()
+                        .anyMatch(p -> p.getIdUsuario().getEmail().equals(email));
+
+                if (!yaExiste) {
+                    Participa nueva = new Participa();
+                    ParticipaId id = new ParticipaId();
+                    id.setIdViaje(viaje.getId());
+                    id.setIdUsuario(usuario.getId());
+
+                    nueva.setId(id);
+                    nueva.setIdViaje(viaje);
+                    nueva.setIdUsuario(usuario);
+                    nueva.setEsOrganizador(email.equals(actual.getEmail()));
+
+                    pdao.save(nueva);
+                    viaje.getParticipas().add(nueva);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new DAOException("Error actualizando participantes: " + e.getMessage(), e);
+        }
     }
 
     public LocalDate getFechaFromField(JFormattedTextField field) throws IllegalArgumentException {

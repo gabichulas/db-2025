@@ -4,6 +4,7 @@ import com.triplog.dao.DAOException;
 import com.triplog.dao.UsuarioDAO;
 import com.triplog.dao.impl.UsuarioDAOHibernate;
 import com.triplog.model.Usuario;
+import com.triplog.util.GeneralUtils;
 import com.triplog.util.SessionManager;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class LoginWindow extends JFrame {
@@ -24,17 +26,21 @@ public class LoginWindow extends JFrame {
     public LoginWindow() {
         setTitle("Triplog - Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(350, 250);
+        setSize(400, 350);
         setLocationRelativeTo(null);
         setResizable(false);
+
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        ImageIcon logoIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/triplog.png")));
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+
         // Título
-        JLabel titleLabel = new JLabel("Triplog", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+
 
         // Formulario
         JPanel formPanel = new JPanel(new GridLayout(3, 1, 5, 10));
@@ -132,9 +138,16 @@ public class LoginWindow extends JFrame {
         formPanel.add(passPanel);
         formPanel.add(buttonPanel);
 
-        mainPanel.add(titleLabel, BorderLayout.NORTH);
-        mainPanel.add(formPanel, BorderLayout.CENTER);
 
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        add(mainPanel);
+
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.add(logoLabel, BorderLayout.CENTER);
+
+
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
+        mainPanel.add(formPanel, BorderLayout.CENTER);
         add(mainPanel);
     }
 }

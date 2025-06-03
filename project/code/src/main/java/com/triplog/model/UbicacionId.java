@@ -18,6 +18,8 @@ public class UbicacionId implements Serializable {
     @Column(name = "id_lugar", nullable = false)
     private Integer idLugar;
 
+    public UbicacionId() {}
+
     public Integer getIdViaje() {
         return idViaje;
     }

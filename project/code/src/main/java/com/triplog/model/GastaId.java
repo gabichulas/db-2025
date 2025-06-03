@@ -18,6 +18,8 @@ public class GastaId implements Serializable {
     @Column(name = "id_gasto", nullable = false)
     private Integer idGasto;
 
+    public GastaId() {}
+
     public Integer getIdUsuario() {
         return idUsuario;
     }

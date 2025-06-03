@@ -33,6 +33,8 @@ public class Ubicacion {
     @Column(name = "fecha_inicio_visita", nullable = false)
     private LocalDate fechaInicioVisita;
 
+    public Ubicacion() {}
+
     public LocalDate getFechaInicioVisita() {
         return fechaInicioVisita;
     }

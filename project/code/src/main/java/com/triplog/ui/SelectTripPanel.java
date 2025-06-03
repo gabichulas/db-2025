@@ -38,6 +38,7 @@ public class SelectTripPanel extends JPanel {
     private JLabel lblFechaInicio = new JLabel();
     private JLabel lblFechaFin = new JLabel();
     private JLabel lblParticipantes = new JLabel();
+    private Viaje viajeActual;
 
     public SelectTripPanel(TripSelectionListener listener) throws DAOException {
         setLayout(new BorderLayout(10, 10));
@@ -48,19 +49,10 @@ public class SelectTripPanel extends JPanel {
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Acciones"));
 
         JButton newButton = new JButton("Nuevo Viaje");
-        JButton refreshButton = new JButton("Actualizar");
-        JButton deleteButton = new JButton("Eliminar");
-
-        newButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                NewTripDialog dialog = new NewTripDialog((JFrame) SwingUtilities.getWindowAncestor(SelectTripPanel.this));
-                dialog.setVisible(true);
-            }
-        });
-
-        buttonPanel.add(newButton);
-        buttonPanel.add(refreshButton);
+        JButton refreshButton = new JButton("Actualizar Lista");
+        JButton editButton = new JButton("Editar Viaje");
+        JButton deleteButton = new JButton("Eliminar Viaje");
+        JButton logoutButton = new JButton("Cerrar Sesión");
 
         // Lista de viajes (datos de ejemplo)
         ViajeDAOHibernate viajeDAOHibernate = new ViajeDAOHibernate() {
@@ -90,6 +82,102 @@ public class SelectTripPanel extends JPanel {
                 return this;
             }
         });
+
+        newButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewTripDialog dialog = new NewTripDialog((JFrame) SwingUtilities.getWindowAncestor(SelectTripPanel.this));
+                dialog.setVisible(true);
+            }
+        });
+
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Objects.equals(actual.getId(), tripsList.getSelectedValue().getIdCreador().getId())) {
+                    UpdateTripDialog dialog = null;
+                    try {
+                        dialog = new UpdateTripDialog((JFrame) SwingUtilities.getWindowAncestor(SelectTripPanel.this), tripsList.getSelectedValue());
+                    } catch (DAOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    dialog.setVisible(true);
+            } else {
+                    JOptionPane.showMessageDialog(null, "Usted no puede editar este viaje ya que no es el creador", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        refreshButton.addActionListener(e -> {
+            try {
+                List<Viaje> viajesActualizados = viajeDAOHibernate.findByParticipante(actual.getId());
+                DefaultListModel<Viaje> model = (DefaultListModel<Viaje>) tripsList.getModel();
+                model.clear();  // Limpiar el modelo
+                viajesActualizados.forEach(model::addElement);  // Agregar todos los viajes
+            } catch (DAOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al cargar viajes", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tripsList.getSelectedValue() != null) {
+                    int respuesta = JOptionPane.showConfirmDialog(
+                            null,
+                            "¿Estas seguro?",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE
+                    );
+
+                    // Procesar la respuesta
+                    if (respuesta == JOptionPane.YES_OPTION) {
+                        try {
+                            viajeDAOHibernate.delete(tripsList.getSelectedValue());
+                            JOptionPane.showMessageDialog(null, "Viaje eliminado correctamente", "Eliminado", JOptionPane.WARNING_MESSAGE);
+                        } catch (DAOException ex) {
+                            JOptionPane.showMessageDialog(null, "Error al eliminar el viaje", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        System.out.println("No :)");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay ningun viaje seleccionado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        logoutButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    SelectTripPanel.this,
+                    "¿Estás seguro que deseas cerrar sesión?",
+                    "Confirmar cierre de sesión",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Cerrar la sesión actual
+                SessionManager.getInstance().logout();
+
+                // Obtener la ventana padre y cerrarla
+                Window parentWindow = SwingUtilities.getWindowAncestor(SelectTripPanel.this);
+                parentWindow.dispose();
+
+                // Abrir la ventana de login nuevamente
+                SwingUtilities.invokeLater(() -> {
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.setVisible(true);
+                });
+            }
+        });
+
+        buttonPanel.add(newButton);
+        buttonPanel.add(editButton);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(refreshButton);
+        buttonPanel.add(logoutButton);
 
         tripsList.addListSelectionListener(new ListSelectionListener() {
             @Override
